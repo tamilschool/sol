@@ -33,7 +33,7 @@ export default function GamePage() {
   const [previousGuesses, setPreviousGuesses] = useState<string[]>([]);
   const [disabledLetters, setDisabledLetters] = useState<string[]>([]);
   const [validLetters, setValidLetters] = useState<string[]>([]);
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   let lastGuess = previousGuesses[previousGuesses.length - 1];
   let foundWord = lastGuess && getLetters(lastGuess).every((letter, index) => letter === word[index]);
