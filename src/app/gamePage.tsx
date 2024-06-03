@@ -204,16 +204,16 @@ export default function GamePage() {
       <div className="flex flex-col items-center justify-center gap-2 p-4">
         {word.length === 0 &&
           <div>
-            <div className={"grid grid-flow-col auto-cols-4 gap-4 pb-2"}>
+            <div className={'grid grid-flow-col auto-cols-4 gap-2 pb-2'}>
               {[1, 2, 3, 4].map((_letter, index) => (
-                <Skeleton key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-16 min-h-16 font-bold">
+                <Skeleton key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
                   <p className="text-xl"></p>
                 </Skeleton>
               ))}
             </div>
-            <div className={`grid grid-flow-col auto-cols-4 gap-4`}>
+            <div className={'grid grid-flow-col auto-cols-4 gap-2'}>
               {[1, 2, 3, 4].map((_letter, index) => (
-                <Skeleton key={index} className="content-center text-center border rounded shadow min-w-16 min-h-16">
+                <Skeleton key={index} className="content-center text-center border rounded shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16">
                   <p className="text-xl"></p>
                 </Skeleton>
               ))}
@@ -221,14 +221,14 @@ export default function GamePage() {
           </div>
         }
         <div className="flex flex-col justify-start gap-2">
-          <div className={`grid grid-flow-col auto-cols-max gap-4`}>
+          <div className={'grid grid-flow-col auto-cols-max gap-2'}>
             {word.map((letter, index) => (
-              <div key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-16 min-h-16 font-bold">
-                <p className="text-xl">{getHint(letter)}</p>
+              <div key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
+                <p className="text sm:text-xl">{getHint(letter)}</p>
               </div>
             ))}
           </div>
-          <ScrollArea className="max-h-[300px] rounded-md overflow-auto gap-2">
+          <ScrollArea className="max-h-[350px] rounded-md overflow-auto gap-2">
             {
               previousGuesses.map((previousGuess, index1) => {
                 let previousGuessLetters = getLetters(previousGuess);
@@ -241,7 +241,7 @@ export default function GamePage() {
                 // console.log("Letters not in right position : " + lettersNotInRightPosition);
 
                 return (
-                  <div key={index1} className={`grid grid-flow-col auto-cols-max gap-4 pb-2`} ref={index1 === previousGuesses.length - 1 ? scrollRef : null}>
+                  <div key={index1} className={`grid grid-flow-col auto-cols-max gap-2 pb-2`} ref={index1 === previousGuesses.length - 1 ? scrollRef : null}>
                     {previousGuessLetters.map((letter, index) => {
                       let correctPosition = letter === word[index];
                       let className = correctPosition ? 'bg-green-200' : lettersNotInRightPosition.includes(getMei(letter)) ? 'bg-yellow-200' : 'bg-red-200';
@@ -255,8 +255,8 @@ export default function GamePage() {
                       }
 
                       return (
-                        <div key={index} className={`content-center text-center border rounded drop-shadow min-w-16 min-h-16 ${className}`} >
-                          <p className="text-xl">{letter}</p>
+                        <div key={index} className={`content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 ${className}`} >
+                          <p className="text sm:text-xl">{letter}</p>
                         </div>
                       )
                     })}
@@ -267,10 +267,10 @@ export default function GamePage() {
           </ScrollArea>
           {
             !foundWord && (
-              <div className={`grid grid-flow-col auto-cols-max gap-4`}>
+              <div className={`grid grid-flow-col auto-cols-max gap-2`}>
                 {guess.map((letter, index) => (
-                  <div key={index} className="content-center text-center border rounded shadow min-w-16 min-h-16">
-                    <p className="text-xl">{letter}</p>
+                  <div key={index} className="content-center text-center border rounded shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16">
+                    <p className="text sm:text-xl">{letter}</p>
                   </div>
                 ))}
               </div>
