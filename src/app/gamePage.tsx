@@ -211,14 +211,14 @@ export default function GamePage() {
           <div>
             <div className={'grid grid-flow-col auto-cols-4 gap-2 pb-2'}>
               {[1, 2, 3, 4].map((_letter, index) => (
-                <Skeleton key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
+                <Skeleton key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-12 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
                   <p className="text-xl"></p>
                 </Skeleton>
               ))}
             </div>
             <div className={'grid grid-flow-col auto-cols-4 gap-2'}>
               {[1, 2, 3, 4].map((_letter, index) => (
-                <Skeleton key={index} className="content-center text-center border rounded shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16">
+                <Skeleton key={index} className="content-center text-center border rounded shadow min-w-12 min-h-8 sm:min-w-16 sm:min-h-16">
                   <p className="text-xl"></p>
                 </Skeleton>
               ))}
@@ -228,7 +228,7 @@ export default function GamePage() {
         <div className="flex flex-col justify-start gap-2">
           <div className={'grid grid-flow-col auto-cols-max gap-2'}>
             {word.map((letter, index) => (
-              <div key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
+              <div key={index} className="bg-slate-100 content-center text-center border rounded drop-shadow min-w-12 min-h-8 sm:min-w-16 sm:min-h-16 font-bold">
                 <p className="text sm:text-xl">{getHint(letter)}</p>
               </div>
             ))}
@@ -260,7 +260,7 @@ export default function GamePage() {
                       }
 
                       return (
-                        <div key={index} className={`content-center text-center border rounded drop-shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16 ${className}`} >
+                        <div key={index} className={`content-center text-center border rounded drop-shadow min-w-12 min-h-8 sm:min-w-16 sm:min-h-16 ${className}`} >
                           <p className="text sm:text-xl">{letter}</p>
                         </div>
                       )
@@ -274,7 +274,7 @@ export default function GamePage() {
             !foundWord && (
               <div className={`grid grid-flow-col auto-cols-max gap-2`}>
                 {guess.map((letter, index) => (
-                  <div key={index} className="content-center text-center border rounded shadow min-w-8 min-h-8 sm:min-w-16 sm:min-h-16">
+                  <div key={index} className="content-center text-center border rounded shadow min-w-12 min-h-8 sm:min-w-16 sm:min-h-16">
                     <p className="text sm:text-xl">{letter}</p>
                   </div>
                 ))}
@@ -282,7 +282,7 @@ export default function GamePage() {
             )
           }
         </div>
-        <div>
+        <div style={{ position: 'fixed', bottom: 10, width: '100%', maxWidth: '800px' }}>
           <Keyboard
             validLetters={validLetters}
             disabledLetters={disabledLetters}
