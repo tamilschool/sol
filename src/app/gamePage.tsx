@@ -99,11 +99,10 @@ export default function GamePage() {
 
   useEffect(() => {
     if (scrollRef.current) {
-      const elementPosition = scrollRef.current.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth',
-      });
+      const element = scrollRef.current;
+      if (element.scrollHeight > element.clientHeight) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [previousGuesses]);
 
