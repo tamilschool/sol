@@ -34,6 +34,7 @@ export default function GamePage() {
   const [disabledLetters, setDisabledLetters] = useState<string[]>([]);
   const [validLetters, setValidLetters] = useState<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRefP = useRef<HTMLDivElement>(null);
 
   let lastGuess = previousGuesses[previousGuesses.length - 1];
   let foundWord = lastGuess && getLetters(lastGuess).every((letter, index) => letter === word[index]);
@@ -68,7 +69,7 @@ export default function GamePage() {
     let correctLetters: string[] = [];
     let incorrectLetters: string[] = [];
     const wordMeiLetters = word.map((letter) => getMei(letter));
-    console.log("Word Mei Letters : " + wordMeiLetters);
+    // console.log("Word Mei Letters : " + wordMeiLetters);
 
     previousGuesses.forEach((previousGuess) => {
       let previousGuessMeiLetters = getLetters(previousGuess).map((letter) => getMei(letter));
@@ -80,8 +81,8 @@ export default function GamePage() {
         ...previousGuessMeiLetters.filter(letter => wordMeiLetters.includes(letter))
       );
     });
-    console.log("Correct Letters : " + correctLetters);
-    console.log("Disabled Letters : " + incorrectLetters);
+    // console.log("Correct Letters : " + correctLetters);
+    // console.log("Disabled Letters : " + incorrectLetters);
     setValidLetters(correctLetters);
     setDisabledLetters(incorrectLetters);
   }, [previousGuesses, word]);
@@ -98,9 +99,10 @@ export default function GamePage() {
 
 
   useEffect(() => {
-    if (scrollRef.current) {
+    if (scrollRef.current && scrollRefP.current) {
       const element = scrollRef.current;
-      if (element.scrollHeight > element.clientHeight) {
+      const elementP = scrollRefP.current;
+      if (elementP.scrollHeight > elementP.clientHeight) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -231,7 +233,7 @@ export default function GamePage() {
               </div>
             ))}
           </div>
-          <ScrollArea className="max-h-[350px] rounded-md overflow-auto gap-2">
+          <ScrollArea className="max-h-[350px] rounded-md overflow-auto gap-2" ref={scrollRefP}>
             {
               previousGuesses.map((previousGuess, index1) => {
                 let previousGuessLetters = getLetters(previousGuess);
