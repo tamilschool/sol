@@ -17,6 +17,10 @@ import { getHint, getLetters, getMei, getUyirMei } from "@/lib/utils";
 import confetti from 'canvas-confetti';
 import { useEffect, useRef, useState } from "react";
 import Keyboard from "./keyboard";
+import { Info, Settings } from "lucide-react";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 // Link copied, You're now ready!
 // Mock URL
@@ -26,6 +30,11 @@ import Keyboard from "./keyboard";
 // 
 
 export default function GamePage() {
+  const domain = "https://raw.githubusercontent.com"
+  const account = "dreamuth/sol"
+  const path = "main/public/words.json"
+  const dataUrl = `${domain}/${account}/${path}`
+
   const [allWords, setAllWords] = useState<string[]>([]);
   const [word, setWord] = useState<string[]>([]);
   const [guess, setGuess] = useState<string[]>(new Array(word.length).fill(''));
@@ -33,6 +42,9 @@ export default function GamePage() {
   const [previousGuesses, setPreviousGuesses] = useState<string[]>([]);
   const [disabledLetters, setDisabledLetters] = useState<string[]>([]);
   const [validLetters, setValidLetters] = useState<string[]>([]);
+
+  const [keyboardColors, setKeyboardColors] = useState<boolean>(true);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollRefP = useRef<HTMLDivElement>(null);
 
@@ -48,7 +60,7 @@ export default function GamePage() {
   }
 
   useEffect(() => {
-    fetch('https://run.mocky.io/v3/2e2bbaab-d24c-42d1-b0f5-ef8c1057c911')
+    fetch(dataUrl)
       .then(response => response.json())
       .then(data => {
         if (data.words.length === 0) {
@@ -83,9 +95,14 @@ export default function GamePage() {
     });
     // console.log("Correct Letters : " + correctLetters);
     // console.log("Disabled Letters : " + incorrectLetters);
-    setValidLetters(correctLetters);
-    setDisabledLetters(incorrectLetters);
-  }, [previousGuesses, word]);
+    if (keyboardColors) {
+      setValidLetters(correctLetters);
+      setDisabledLetters(incorrectLetters);
+    } else {
+      setValidLetters([]);
+      setDisabledLetters([]);
+    }
+  }, [previousGuesses, word, keyboardColors]);
 
   useEffect(() => {
     if (foundWord) {
@@ -155,6 +172,11 @@ export default function GamePage() {
     console.log("Next Clicked: " + randomWord)
   }
 
+  const toggleKeyboardColors = () => {
+    console.log("Toggle Keyboard Colors: " + !keyboardColors + " -> " + keyboardColors);
+    setKeyboardColors(!keyboardColors);
+  };
+
   const renderButtons = (state: string) => (
     <div className={`content-center text-center border rounded shadow min-w-8 min-h-8 ${state}`} >
       <p className="text-xl"></p>
@@ -164,14 +186,16 @@ export default function GamePage() {
 
   return (
     <div className="w-screen">
-      <div className="flex justify-between items-center ">
+      <div className="flex justify-between items-center shadow">
         <div className="m-2">
           <h1 className="text-2xl font-bold text-slate-600">வார்த்தை விளையாட்டு</h1>
         </div>
-        <div className="m-2">
+        <div className="m-2 flex items-center gap-2">
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline">Instructions</Button>
+              <Button variant="outline" size="icon">
+                <Info />
+              </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -203,6 +227,27 @@ export default function GamePage() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+          <Sheet>
+            <SheetTrigger>
+              <Button variant="outline" size="icon">
+                <Settings />
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle>Settings</SheetTitle>
+                <SheetDescription>
+                  <div>
+                    <div className="flex justify-between  items-center space-x-2 ">
+                      <Label htmlFor="keyboardHightlightSwitch">Highlight keyboard letters? </Label>
+                      <Switch id="keyboardHightlightSwitch" onCheckedChange={toggleKeyboardColors} checked={keyboardColors} />
+                    </div>
+                  </div>
+                </SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+
         </div>
       </div>
       <Separator />
