@@ -31,7 +31,7 @@ export const meiLetters: string[] = [
   "ற்",
   "ன்",
 ];
-const uyirMeiLetters: string[] = [
+export const uyirMeiLetters: string[] = [
   "க",
   "கா",
   "கி",
